@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+    Usuarios
+{% endblock %}
+
+{% block body %}
+Hoy {{hoy}}
+    <ul>
+        {% for usuario in usuarios %}
+            <li>
+                 {{ usuario.gender }} 
+                 {{ usuario.name.first }} 
+                 {{ usuario.name.last }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

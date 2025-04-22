@@ -1,31 +1,26 @@
-from flask import Flask, render_template
-import json
-app = Flask(__name__)
+from datetime import date
+import requests
 
+from flask import Flask, render_template
+
+app = Flask(__name__)
 
 @app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route('/about')
+def acerca():
+    return render_template('acerca_de.html')
+
+@app.route('/users')
+def usuarios():
+    response = requests.get(
+        'https://randomuser.me/api/?results=5'
+    ).json()
+    list_usuarios = response['results']
     return render_template(
-        'index.html',
+        'users.html',
+        usuarios=list_usuarios,
+        hoy=date.today()
     )
-
-@app.route('/states')
-def states():
-    with open('data/states.json') as f:
-        data = json.load(f)
-
-        return render_template(
-            'states.html',
-            data=data['provincias'],
-        )
-
-
-@app.route('/welcome/<name>')
-def welcome(name):
-    return f"Welcome , {name}!"
-
-@app.route('/sum/<a>/<b>')
-def suma(a, b):
-    c = int(a) + int(b)
-    return str(c)
-
