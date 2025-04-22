@@ -22,5 +22,5 @@ def usuarios():
     return render_template(
         'users.html',
         usuarios=list_usuarios,
-        hoy=date.now()
+        hoy=date.today()
     )
