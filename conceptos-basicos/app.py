@@ -1,7 +1,7 @@
 from datetime import date
 import requests
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 
@@ -15,8 +15,11 @@ def acerca():
 
 @app.route('/users')
 def usuarios():
+    cant = request.args.get(
+        'cant', default=10, type=int
+    )
     response = requests.get(
-        'https://randomuser.me/api/?results=5'
+        f'https://randomuser.me/api/?results={cant}'
     ).json()
     list_usuarios = response['results']
     return render_template(
